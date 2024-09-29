@@ -161,7 +161,7 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
     return profile
 };
 
-  export const getOrganizationProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
+export const getOrganizationProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
     let organizationProfile: OrganizationProfile | null = null; // Declare it here
       try {
         setLoading(true)
