@@ -8,13 +8,26 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LandingScreen from "./screens/LandingScreen";
+import * as Linking from 'expo-linking';
+
+const prefix = Linking.createURL('/');
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const linking = {
+    prefixes: [prefix, 'exp://35.3.202.123:8081'],
+    config: {
+      screens: {
+        Welcome: 'welcome', // Path for Home Screen
+        SignUp: 'signup',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer linking={linking}>
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}

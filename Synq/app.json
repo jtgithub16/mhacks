@@ -25,6 +25,7 @@
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "scheme": "synq"
   }
 }
