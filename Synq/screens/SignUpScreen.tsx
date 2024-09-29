@@ -17,7 +17,7 @@ import PersonalSignUp from "./forms/PersonalSignUp";
 const SignUp = ({ route, navigation }) => {
   const { account } = route.params;
   return (
-    <View class-name="p-4 flex-1 justify-center space-y-2">
+    <View class-name="p-20 flex-1 justify-center space-y-2">
       {account === "personal" ? (
         <PersonalSignUp navigation={navigation} />
       ) : (

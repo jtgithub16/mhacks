@@ -20,7 +20,7 @@ const Landing = ({ navigation }) => {
           if (route.name === "Code") {
             icon = <IonIcon name={"qr-code"} size={size} color={color} />;
           } else if (route.name === "History") {
-            icon = <IonIcon name={"time-outline"} size={size} color={color} />;
+            icon = <IonIcon name={"time"} size={size} color={color} />;
             // icon = <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             // <mask id="mask0_24_164" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
             // <rect width="30" height="30" fill="#D9D9D9"/>
@@ -30,7 +30,7 @@ const Landing = ({ navigation }) => {
             // </g>
             // </svg>
           } else if (route.name === "Profile") {
-            icon = <IonIcon name={"card-outline"} size={size} color={color} />;
+            icon = <IonIcon name={"person"} size={size} color={color} />;
           }
 
           return icon;

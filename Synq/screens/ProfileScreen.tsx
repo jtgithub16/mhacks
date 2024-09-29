@@ -22,72 +22,82 @@ import { PersonalProfile, OrganizationProfile } from "../lib/types";
 import { Session } from "@supabase/supabase-js";
 
 const Profile = ({ navigation }) => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [type, setType] = useState<"personal" | "organization">("personal");
-  const [session, setSessions] = useState(null);
+  const [session, setSession] = useState(null);
   const [toRender, setToRender] = useState({});
   const [profile, setProfile] = useState(null);
 
+
   useEffect(() => {
-    const tempSession = supabase.auth.getSession();
-    setSessions(tempSession);
-    const fetchProfile = async (profiletype) => {
-      if (profiletype === "personal") {
-        const fetchedProfile = await getPersonalProfile(setLoading, session); // Await the profile
-        setProfile(fetchedProfile);
-      } else {
-        const fetchedProfile = await getOrganizationProfile(
-          setLoading,
-          session
-        ); // Await the profile
-        setProfile(fetchedProfile);
+    const fetchSession = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch session asynchronously
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error) {
+          console.error("Error retrieving session:", error);
+          return;
+        }
+
+        setSession(data.session);
+
+        if (!data.session) {
+          console.error("No active session found");
+          return;
+        }
+
+        const sessionType = checkSessionType(data.session);
+
+        // Fetch appropriate profile based on session type
+        if (sessionType) {
+          setType("personal");
+          const fetchedProfile = await getPersonalProfile(setLoading, data.session);
+          console.log(fetchedProfile);
+          setProfile(fetchedProfile);
+        } else {
+          setType("organization");
+          const fetchedProfile = await getOrganizationProfile(setLoading, data.session);
+          setProfile(fetchedProfile);
+        }
+      } catch (e) {
+        console.error("Error fetching session information:", e);
+      } finally {
+        setLoading(false); // Set loading to false after the process
       }
     };
 
-    try {
-      if (checkSessionType(session)) {
-        //1 = personal, 0 = organization
-        //personal
-        setType("personal");
-        fetchProfile("personal");
-      } else {
-        //organization
-        setType("organization");
-        fetchProfile("organization");
-      }
-    } catch (e) {
-      console.error("error fetching session information", e);
-    }
-
-    setLoading(false);
-  }, [session]);
+  fetchSession();
+  }, []);
 
   return (
-    <View class-name="flex-1 justify-center items-center px-4">
-      <Text class-name="text-2xl font-bold mb-4">Profile Information</Text>
+    <View className="flex-1 justify-center items-center px-4">
+      <Text className="text-2xl font-bold mb-4">Profile Information</Text>
 
       {profile ? (
         type === "personal" ? (
           // Render fields for personal profile
-          <View class-name="space-y-2">
-            <Text class-name="text-lg">First Name: {profile.first_name}</Text>
-            <Text class-name="text-lg">Last Name: {profile.last_name}</Text>
-            <Text class-name="text-lg">Email: {profile.email}</Text>
+          <View className="space-y-2">
+            <Text className="text-lg">First Name: {profile.first_name}</Text>
+            <Text className="text-lg">Last Name: {profile.last_name}</Text>
+            <Text className="text-lg">Email: {profile.email}</Text>
           </View>
         ) : (
           // Render fields for organization profile
-          <View class-name="space-y-2">
-            <Text class-name="text-lg">
+          <View className="space-y-2">
+            <Text className="text-lg">
               Organization Name: {profile.organization_name}
             </Text>
-            <Text class-name="text-lg">
+            <Text className="text-lg">
               Contact Person: {profile.contact_person}
             </Text>
-            <Text class-name="text-lg">Email: {profile.email}</Text>
+            <Text className="text-lg">Email: {profile.email}</Text>
           </View>
         )
       ) : (
-        <Text class-name="text-red-500">No profile data found</Text>
+        <Text className="text-red-500">No profile data found</Text>
       )}
       <TouchableOpacity onPress={() => navigation.navigate("Code")}>
         <Text>Edit Profile</Text>

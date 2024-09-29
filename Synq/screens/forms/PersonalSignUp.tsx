@@ -32,7 +32,7 @@ const PersonalSignup = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View className="p-20">
       <TextInput
         placeholder={"First"}
         value={formData.first_name}
