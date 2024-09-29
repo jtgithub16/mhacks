@@ -13,12 +13,19 @@ import CodeScreen from "./screens/CodeScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import * as Linking from "expo-linking";
+import { useFonts } from 'expo-font';
 
 const prefix = Linking.createURL("/");
 
 const Stack = createStackNavigator();
 
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'IBMPlexSans-Regular': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
+    'IBMPlexSans-Bold': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
+  });
+
   const linking = {
     prefixes: [prefix, "exp://35.3.202.123:8081"],
     config: {
