@@ -14,7 +14,7 @@ import {
   supabase,
   getPersonalProfile,
   getOrganizationProfile,
-  checkSessionType,
+  checkIdType,
 } from "../lib/supabase";
 import { PersonalProfile, OrganizationProfile } from "../lib/types";
 import { Session } from "@supabase/supabase-js";
@@ -41,7 +41,7 @@ const History = ({ navigation }) => {
 
     const fetchProfile = async (session) => {
       try {
-        if (checkSessionType(session)) {
+        if (checkIdType(session)) {
           setType("personal");
           const fetchedProfile = await getPersonalProfile(setLoading, userId);
           // setProfile(fetchedProfile);
