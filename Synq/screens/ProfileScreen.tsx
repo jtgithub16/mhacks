@@ -32,6 +32,7 @@ const Profile = ({ navigation }) => {
   const [editMode, setEditMode] = useState(false);
   const [email, setEmail] = useState("");
 
+<<<<<<< Updated upstream
   const handleLogOut = async () => {
     const success = await logout()
     if(success){  
@@ -46,11 +47,13 @@ const Profile = ({ navigation }) => {
   const handleEmail = () => {
     setEmail(email);
   }
+=======
+>>>>>>> Stashed changes
   useEffect(() => {
     const fetchSession = async () => {
       try {
         setLoading(true);
-        
+
         // Fetch session asynchronously
         const { data, error } = await supabase.auth.getSession();
 
@@ -66,18 +69,36 @@ const Profile = ({ navigation }) => {
           return;
         }
 
+<<<<<<< Updated upstream
         const sessionType = await checkIdType(data.session?.user.id);
+=======
+        const sessionType = await checkSessionType(data.session);
+>>>>>>> Stashed changes
 
         // Fetch appropriate profile based on session type
         if (sessionType) {
           setType("personal");
+<<<<<<< Updated upstream
           const fetchedProfile = await getPersonalProfile(setLoading, data.session?.user.id);
+=======
+          const fetchedProfile = await getPersonalProfile(
+            setLoading,
+            data.session?.user.id
+          );
+>>>>>>> Stashed changes
           console.log(fetchedProfile);
           setProfile(fetchedProfile);
           setEmail(email);
         } else {
           setType("organization");
+<<<<<<< Updated upstream
           const fetchedProfile = await getOrganizationProfile(setLoading, data.session?.user.id);
+=======
+          const fetchedProfile = await getOrganizationProfile(
+            setLoading,
+            data.session?.user.id
+          );
+>>>>>>> Stashed changes
           setProfile(fetchedProfile);
           setEmail(email);
         }
@@ -88,7 +109,7 @@ const Profile = ({ navigation }) => {
       }
     };
 
-  fetchSession();
+    fetchSession();
   }, []);
 
   return (

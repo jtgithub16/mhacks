@@ -111,7 +111,6 @@ const Login = ({ navigation }) => {
           >
             <Image source={require("../assets/icons/apple.png")} />
           </TouchableOpacity>
-          {/* PUT GOOGLE AND APPLE LOG IN BUTTONS HERE */}
         </View>
       </View>
     </View>
