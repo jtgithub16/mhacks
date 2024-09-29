@@ -40,6 +40,18 @@ export default function App() {
   );
 }
 
+const linking = {
+  prefixes: ["exp://35.3.242.196:8081"],
+  config: {
+    screens: {
+      Welcome: "welcome",
+      SignUp: "signup",
+      Login: "login",
+      Landing: "landing",
+    },
+  },
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

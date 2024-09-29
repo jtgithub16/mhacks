@@ -162,42 +162,40 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
     return profile
 };
 
-export const getOrganizationProfile = async (
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  session: any
-) => {
-  let organizationProfile: OrganizationProfile | null = null; // Declare it here
-  try {
-    setLoading(true);
-    if (!session?.user) throw new Error("No user on the session!");
+  export const getOrganizationProfile = async (setLoading: (loading) => {}, session: Session) => {
+    let organizationProfile: OrganizationProfile | null = null; // Declare it here
+      try {
+        setLoading(true)
+        if (!session?.user) throw new Error('No user on the session!')
+  
+        const { data, error, status } = await supabase
+          .from('organization')
+          .select(`org_name, website, email, description`)
+          .eq('organization_id', session?.user.id)
+          .single()
+        
+        if (error && status !== 406) {
+          throw error
+        }
+        if (data) {
+          const organizationProfile: OrganizationProfile = {
+            organization_id: session?.user.id,
+            org_name: data.org_name,
+            website: data.website,
+            email: data.email,
+            description: data.description,
+        };
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          Alert.alert(error.message)
+        }
+      } finally {
+        setLoading(false)
+      }
+      return organizationProfile
+    }
 
-    const { data, error, status } = await supabase
-      .from("organization")
-      .select(`org_name, website, email, description`)
-      .eq("organization_id", session?.user.id)
-      .single();
-
-    if (error && status !== 406) {
-      throw error;
-    }
-    if (data) {
-      const organizationProfile: OrganizationProfile = {
-        organization_id: session?.user.id,
-        org_name: data.org_name,
-        website: data.website,
-        email: data.email,
-        description: data.description,
-      };
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      Alert.alert(error.message);
-    }
-  } finally {
-    setLoading(false);
-  }
-  return organizationProfile;
-};
 
 export const updatePersonalProfile = async ({
   setLoading,
