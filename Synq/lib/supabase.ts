@@ -256,3 +256,106 @@ export const updateOrganizationProfile = async ({
     setLoading(false);
   }
 };
+
+export const synqPersonalProfile = async ({
+  setLoading,
+  session,
+  accountId,
+  userId,
+}: {
+  setLoading: (loading: boolean) => void;
+  session: Session;
+  accountId: string; // The ID of the organization to sync with
+  userId: string;    // The ID of the user syncing
+}) => {
+  try {
+    setLoading(true);
+    if (!session?.user) throw new Error("No user on the session!");
+
+    // Fetch the current personal profile
+    const { data: profile, error: fetchError } = await supabase
+      .from("personal")
+      .select("*")
+      .eq("personal_id", userId)
+      .single();
+
+    if (fetchError || !profile) {
+      throw new Error("Error fetching the profile.");
+    }
+
+    // Update the synqed list
+    const updatedProfile = {
+      ...profile,
+      synqed: [...(profile.synqed || []), accountId], // Add the new organization to the synqed list
+    };
+
+    console.log("about to update supabase")
+
+    const { error } = await supabase.from("personal").upsert(updatedProfile);
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const synqOrganizationProfile = async ({
+  setLoading,
+  session,
+  accountId,
+  userId,
+}: {
+  setLoading: (loading: boolean) => void;
+  session: Session;
+  accountId: string; // The ID of the person to sync with
+  userId: string;    // The ID of the organnization syncing
+}) => {
+  try {
+    console.log("BEGIN SYNQ PROCESS")
+    
+    setLoading(true);
+    if (!session?.user) throw new Error("No user on the session!");
+
+    console.log("alskjdf")
+    // Fetch the current organization profile
+    const { data: profile, error: fetchError } = await supabase
+      .from("organization")
+      .select("*")
+      .eq("organization_id", userId)
+      .single();
+
+    console.log(fetchError)
+    console.log("profile")
+    console.log(profile)
+
+    if (fetchError || !profile) {
+      throw new Error("Error fetching the profile.");
+    }
+    console.log("LSDKJF")
+    // Update the synqed list
+    const updatedProfile = {
+      ...profile,
+      synqed: [...(profile.synqed || []), accountId], // Add the new person to the synqed list
+    };
+
+    console.log("about to update supabase")
+
+    const { error } = await supabase.from("organization").upsert(updatedProfile);
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      Alert.alert(error.message);
+    }
+  } finally {
+    setLoading(false);
+  }
+};

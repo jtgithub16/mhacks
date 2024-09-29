@@ -33,10 +33,10 @@ const Profile = ({ navigation }) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleLogOut = async () => {
-    const success = await logout()
-    if(success){  
-      console.log("succesfully logged out")
-      navigation.navigate("Welcome")
+    const success = await logout();
+    if (success) {
+      console.log("succesfully logged out");
+      navigation.navigate("Welcome");
     }
   };
 
@@ -73,12 +73,18 @@ const Profile = ({ navigation }) => {
         // Fetch appropriate profile based on session type
         if (sessionType) {
           setType("personal");
-          const fetchedProfile = await getPersonalProfile(setLoading, data.session?.user.id);
+          const fetchedProfile = await getPersonalProfile(
+            setLoading,
+            data.session?.user.id
+          );
           console.log(fetchedProfile);
           setProfile(fetchedProfile);
         } else {
           setType("organization");
-          const fetchedProfile = await getOrganizationProfile(setLoading, data.session?.user.id);
+          const fetchedProfile = await getOrganizationProfile(
+            setLoading,
+            data.session?.user.id
+          );
           setProfile(fetchedProfile);
         }
       } catch (e) {

@@ -38,7 +38,7 @@ const History = ({ navigation }) => {
 
     const fetchProfile = async (userId) => {
       try {
-        if (checkIdType(userId)) {
+        if (await checkIdType(userId)) {
           setType("personal");
           const fetchedProfile = await getPersonalProfile(setLoading, userId);
           console.log(fetchedProfile);
@@ -48,7 +48,7 @@ const History = ({ navigation }) => {
           setType("organization");
           const fetchedProfile = await getOrganizationProfile(
             setLoading,
-            userId
+            userId 
           );
           console.log(fetchedProfile);
           // setProfile(fetchedProfile);
@@ -79,7 +79,7 @@ const History = ({ navigation }) => {
         } else {
           const userDetails = await getPersonalProfile(setLoading, id);
           if (userDetails) {
-            names.push("${userDetails.first_name} ${userDetails.last_name");
+            names.push(`${userDetails.first_name} ${userDetails.last_name}`);
           }
         }
       }

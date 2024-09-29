@@ -8,14 +8,15 @@ import {
   Button,
   TextInput,
   ScrollView,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   supabase,
   getPersonalProfile,
   getOrganizationProfile,
-  updatePersonalProfile,
-  updateOrganizationProfile,
+  synqPersonalProfile,
+  synqOrganizationProfile,
   checkIdType,
 } from "../lib/supabase";
 import { PersonalProfile, OrganizationProfile } from "../lib/types";
@@ -25,44 +26,45 @@ const Profile = ({ route, navigation }) => {
   const { accountId } = route.params;
   console.log(accountId);
   const [loading, setLoading] = useState<boolean>(false);
-  const [profile, setProfile] = useState(null);
-  const [type, setType] = useState<"personal" | "organization">("personal");
-  // const [session, setSession] = useState(null);
+  const [scannedProfile, setScannedProfile] = useState(null); // profile of scanned code
+  const [scannedType, setScannedType] = useState<"personal" | "organization">("personal"); // account type of scanned code
+  const [userId, setUserId] = useState("");
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     const fetchSession = async () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      // setSessions(session);
-      fetchProfile(session);
+      setSession(session);
+      if (session) {
+        setUserId(session.user.id);
+        fetchScannedProfile();
+      }
     };
 
-    const fetchProfile = async (accountId) => {
+    const fetchScannedProfile = async () => {
       try {
-        // Attempt to fetch personal profile
-        const fetchedProfile = await getPersonalProfile(setLoading, accountId);
-
-        // If successful, update state
-        if (fetchedProfile) {
-          console.log(fetchedProfile);
-          setProfile(fetchedProfile);
-          setType("personal");
-        } else {
-          // If not successful, attempt to fetch organization profile
-          const fetchedOrgProfile = await getOrganizationProfile(
+        const accountType = await checkIdType(accountId);
+        // Fetch appropriate profile based on session type
+        if (accountType) {
+          setScannedType("personal");
+          const fetchedProfile = await getPersonalProfile(
             setLoading,
             accountId
           );
-
-          if (fetchedOrgProfile) {
-            console.log(fetchedOrgProfile);
-            setProfile(fetchedOrgProfile);
-            setType("organization");
-          }
+          console.log(fetchedProfile);
+          setScannedProfile(fetchedProfile);
+        } else {
+          setScannedType("organization");
+          const fetchedProfile = await getOrganizationProfile(
+            setLoading,
+            accountId
+          );
+          setScannedProfile(fetchedProfile);
         }
       } catch (error) {
-        console.error("Error fetching profile history:", error);
+        console.error("Error fetching scanned profile:", error);
       } finally {
         setLoading(false);
       }
@@ -71,37 +73,85 @@ const Profile = ({ route, navigation }) => {
     fetchSession();
   }, []);
 
-  return (
-    <View className="flex-1 justify-center items-center px-4">
-      <Text className="text-2xl font-bold mb-4">Profile Information</Text>
+  const handleSynq = async () => {
+    if (!userId) {
+      Alert.alert("Error", "User ID not found.");
+      return;
+    }
 
-      {profile ? (
-        type === "personal" ? (
+    setLoading(true);
+    try {
+      if (scannedType === "personal") {
+        // Update the organization profile's synqed list
+        const updatedProfile = await synqOrganizationProfile({
+          setLoading,
+          session,
+          accountId,
+          userId,
+        });
+        
+        Alert.alert("Success", "Successfully synced with the user.");
+      } else {
+        // Update the personal profile's synqed list
+        const updatedProfile = await synqPersonalProfile({
+          setLoading,
+          session,
+          accountId,
+          userId,
+        });
+        Alert.alert("Success", "Successfully synced with the organization.");
+      }
+    } catch (error) {
+      console.error("Error updating synced list:", error);
+      Alert.alert("Error", "Could not sync. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <View className="flex-1 justify-center items-center px-4 relative space-y-4">
+      <TouchableOpacity
+        className=""
+        onPress={() => navigation.navigate("Landing")}
+      >
+        <Image
+          className="h-8 w-8"
+          source={require("../assets/icons/close.png")}
+        />
+      </TouchableOpacity>
+      <Text className="text-2xl font-bold mb-4">Profile </Text>
+
+      {scannedProfile ? (
+        scannedType === "personal" ? (
           // Render fields for personal profile
           <View className="space-y-2">
-            <Text className="text-lg">First Name: {profile.first_name}</Text>
-            <Text className="text-lg">Last Name: {profile.last_name}</Text>
-            <Text className="text-lg">Email: {profile.email}</Text>
+            <Text className="text-lg">First Name: {scannedProfile.first_name}</Text>
+            <Text className="text-lg">Last Name: {scannedProfile.last_name}</Text>
+            <Text className="text-lg">Email: {scannedProfile.email}</Text>
           </View>
         ) : (
           // Render fields for organization profile
           <View className="space-y-2">
             <Text className="text-lg">
-              Organization Name: {profile.organization_name}
+              Organization Name: {scannedProfile.organization_name}
             </Text>
             <Text className="text-lg">
-              Contact Person: {profile.contact_person}
+              Contact Person: {scannedProfile.contact_person}
             </Text>
-            <Text className="text-lg">Email: {profile.email}</Text>
+            <Text className="text-lg">Email: {scannedProfile.email}</Text>
           </View>
         )
       ) : (
         <Text className="text-red-500">No profile data found</Text>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate("Code")}>
-        <Text>Edit Profile</Text>
-      </TouchableOpacity>
       <Text>id: {accountId}</Text>
+      <TouchableOpacity
+        className="shadow rounded-full bg-white p-1 w-40"
+        onPress={handleSynq}
+      >
+        <Text className="text-2xl text-center">Synq</Text>
+      </TouchableOpacity>
     </View>
   );
 };

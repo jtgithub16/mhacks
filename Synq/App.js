@@ -9,6 +9,9 @@ import LoginScreen from "./screens/LoginScreen";
 import ScannedProfile from "./screens/ScannedProfileScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LandingScreen from "./screens/LandingScreen";
+import CodeScreen from "./screens/CodeScreen";
+import HistoryScreen from "./screens/HistoryScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import * as Linking from "expo-linking";
 
 const prefix = Linking.createURL("/");
@@ -55,6 +58,9 @@ export default function App() {
           component={ScannedProfile}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Code" component={CodeScreen} />
+        <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
