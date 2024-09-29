@@ -37,9 +37,6 @@ const Welcome = ({ navigation }) => {
           <Text>Log in here</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-        <Text>Navigate to Profile for John and Johann</Text>
-      </TouchableOpacity>
     </View>
   );
 };
