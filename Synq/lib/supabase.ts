@@ -205,15 +205,11 @@ export const getOrganizationProfile = async (
   return profile;
 };
 
-export const updatePersonalProfile = async ({
-  setLoading,
-  session,
-  updatedProfile,
-}: {
-  setLoading: (loading) => {};
-  session: Session;
-  updatedProfile: PersonalProfile;
-}) => {
+export const updatePersonalProfile = async (
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  session: Session,
+  updatedProfile: PersonalProfile,
+) => {
   try {
     setLoading(true);
     if (!session?.user) throw new Error("No user on the session!");
@@ -237,7 +233,7 @@ export const updateOrganizationProfile = async ({
   session,
   updatedProfile,
 }: {
-  setLoading: (loading) => {};
+  setLoading:  React.Dispatch<React.SetStateAction<boolean>>;
   session: Session;
   updatedProfile: OrganizationProfile;
 }) => {
