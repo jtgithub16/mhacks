@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   Alert,
@@ -10,8 +10,18 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import {
+  getPersonalProfile,
+  getOrganizationProfile,
+  updatePersonalProfile,
+  updateOrganizationProfile,
+} from "../lib/supabase";
+import { PersonalProfile, OrganizationProfile } from "../lib/types";
 
 const Profile = ({ navigation }) => {
+  const [loading, setLoading] = useState(true);
+  const [type, setType] = useState("personal");
+
   return (
     <View>
       <Text>THIS IS THE PROFILE SCREEN</Text>
