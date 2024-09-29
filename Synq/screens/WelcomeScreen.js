@@ -12,7 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { supabase } from '../lib/supabase';
 
-const SignUp = ({ navigation }) => {
+const Welcome = ({ navigation }) => {
   return (
     <View className="p-4 bg-synq-bg flex-1 justify-center space-y-2">
       <Text className="text-bold text-4xl">Welcome to Sync! 👋</Text>
@@ -35,4 +35,4 @@ const SignUp = ({ navigation }) => {
   );
 };
 
-export default SignUp;
+export default Welcome;
