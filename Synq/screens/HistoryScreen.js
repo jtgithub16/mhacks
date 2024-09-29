@@ -15,7 +15,7 @@ const History = ({ navigation }) => {
   return (
     <View>
       <Text>THIS IS THE HISTORY SCREEN</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("WelcomeScreen")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
         <Text>SignUp</Text>
       </TouchableOpacity>
     </View>

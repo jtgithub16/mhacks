@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { supabase } from '../lib/supabase';
+import { supabase } from "../lib/supabase";
 
 const Welcome = ({ navigation }) => {
   return (
@@ -18,7 +18,10 @@ const Welcome = ({ navigation }) => {
       <Text className="text-bold text-4xl">Welcome to Sync! 👋</Text>
       <Text>Let's get you started.</Text>
       <Text>Sign up as a</Text>
-      <TouchableOpacity className="bg-synq-red rounded p-4 flex items-center" onPress={() => navigation.navigate("Login")}>
+      <TouchableOpacity
+        className="bg-synq-red rounded p-4 flex items-center"
+        onPress={() => navigation.navigate("Login")}
+      >
         <Text>Personal User</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
@@ -28,7 +31,7 @@ const Welcome = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text>Log in here</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
         <Text>Navigate to Profile for John and Johann</Text>
       </TouchableOpacity>
     </View>
