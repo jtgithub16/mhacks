@@ -9,6 +9,8 @@ module.exports = {
         "synq-bg": "#EDE0D4",
         "synq-yellow": "#FFC107",
         "synq-text": "#424242",
+        "light-gray": "#D9D9D9",
+        "white": "#FFFFFF"
       },
     },
   },
