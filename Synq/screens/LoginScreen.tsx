@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.pop()}>
           <Image source={require("../assets/icons/back.png")} />
         </TouchableOpacity>
-        <Text className="text-2xl font-bold">Login</Text>
+        <Text className="text-2xl font-bold" style={{ fontFamily: "IBMPlexSans-Bold" }}>Login</Text>
         <TextInput
           style={{
             backgroundColor: "white",
@@ -43,6 +43,7 @@ const Login = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular",
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder="Email"
@@ -60,6 +61,7 @@ const Login = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular",
           }}
           className="border border-[#D5D8DE] rounded-md  w-full p-4  flex-row"
           placeholder="Password"
@@ -73,7 +75,7 @@ const Login = ({ navigation }) => {
           title={"Login"}
           onPress={handleSubmit}
         >
-          <Text className="text-white ">Login</Text>
+          <Text className="text-white " style={{ fontFamily: "IBMPlexSans-Bold" }}>Login</Text>
         </TouchableOpacity>
         <View className="flex flex-row items-center justify-between space-x-4">
           <View className="h-px flex-1 bg-[#424242]" />

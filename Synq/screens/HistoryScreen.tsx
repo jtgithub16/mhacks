@@ -48,7 +48,7 @@ const History = ({ navigation }) => {
           setType("organization");
           const fetchedProfile = await getOrganizationProfile(
             setLoading,
-            userId 
+            userId
           );
           console.log(fetchedProfile);
           // setProfile(fetchedProfile);
@@ -94,31 +94,42 @@ const History = ({ navigation }) => {
 
   return (
     <View className="flex justify-center items-center h-full w-full p-8 space-y-8">
-        <View className="w-full flex-row justify-start">
-          <Text className="text-3xl font-bold mb-4">History</Text>
-        </View>
-        <ScrollView className="w-full">
-          {synqedNames.length > 0 ? (
-            synqedNames.map((item, index) => 
-            <View           
-            style={{
-              backgroundColor: "white",
-              borderRadius: 10,
-              // Apply shadow properties
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5, // Needed for Android shadow
-              marginBottom: 30,
-            }}
-            className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg">
+      <View className="w-full flex-row justify-start">
+        <Text className="text-3xl mb-4" style={{ fontFamily: "IBMPlexSans-Bold" }}>History</Text>
+      </View>
+      <ScrollView className="w-full">
+        {synqedNames.length > 0 ? (
+          synqedNames.map((item, index) => (
+            <View
+              style={{
+                backgroundColor: "white",
+                // Apply shadow properties
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5, // Needed for Android shadow
+                marginBottom: 30,
+              }}
+              key={index}
+              className="w-full p-4 rounded-md shadow-md"
+            >
               <View className="flex-row">
                 <View className="bg-light-gray p-10 px-10 mr-2"></View>
-                <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, justifyContent: "space-between" }}>
                   <View>
-                    <Text className="text font-semibold text-synq-red" key={index}>{item}</Text>
-                    <Text className="text-xs text-synq-text">Time scanned: 1d ago</Text>
+                    <Text
+                      className="text font-semibold text-synq-red"
+                      style={{ fontFamily: "IBMPlexSans-Bold" }}
+                      key={index}
+                    >
+                      {item}
+                    </Text>
+                    <Text 
+                      className="text-xs text-synq-text"
+                      style={{ fontFamily: "IBMPlexSans-Regular" }}>
+                      Time scanned: 1d ago
+                    </Text>
                   </View>
                   <View className="bg-synq-blue px-4 py-1 self-end rounded-md">
                     <TouchableOpacity>
@@ -127,11 +138,12 @@ const History = ({ navigation }) => {
                   </View>
                 </View>
               </View>
-            </View>)
-          ) : (
-            <Text>You haven't synced with anyone yet!</Text>
-          )}
-        </ScrollView>
+            </View>
+          ))
+        ) : (
+          <Text>You haven't synced with anyone yet!</Text>
+        )}
+      </ScrollView>
     </View>
   );
 };

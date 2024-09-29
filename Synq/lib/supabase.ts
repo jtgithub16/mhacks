@@ -292,8 +292,11 @@ export const synqPersonalProfile = async ({
     };
 
     console.log("about to update supabase");
+    console.log(updatedProfile);
 
     const { error } = await supabase.from("personal").upsert(updatedProfile);
+
+    console.log("successfully updated");
 
     if (error) {
       throw error;

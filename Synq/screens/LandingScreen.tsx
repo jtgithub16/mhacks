@@ -31,7 +31,7 @@ const Landing = ({ navigation }) => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Code" component={CodeScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Code" component={CodeScreen} />
       <Tab.Screen name="History" component={HistoryScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

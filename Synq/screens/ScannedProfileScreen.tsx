@@ -21,15 +21,34 @@ import {
 } from "../lib/supabase";
 import { PersonalProfile, OrganizationProfile } from "../lib/types";
 import { Session } from "@supabase/supabase-js";
+import { white_close, mail, call } from "../lib/svg";
 
 const Profile = ({ route, navigation }) => {
   const { accountId } = route.params;
+  //const qrcodeId = route.params?.qrid ? parseInt(route.params.qrid, 10) : null;
   console.log(accountId);
   const [loading, setLoading] = useState<boolean>(false);
   const [scannedProfile, setScannedProfile] = useState(null); // profile of scanned code
-  const [scannedType, setScannedType] = useState<"personal" | "organization">("personal"); // account type of scanned code
+  const [scannedType, setScannedType] = useState<"personal" | "organization">(
+    "personal"
+  ); // account type of scanned code
   const [userId, setUserId] = useState("");
   const [session, setSession] = useState(null);
+
+  const organizationFields = [
+    { field_name: "email", title: "Organization Email" },
+    { field_name: "website", title: "Website" },
+    { field_name: "Description", title: "Description" },
+    { field_name: "number", title: "Number" },
+  ];
+
+  const personalFields = [
+    { field_name: "first_name", title: "First Name" },
+    { field_name: "last_name", title: "Last Name" },
+    { field_name: "email", title: "Email" },
+    { field_name: "number", title: "Number" },
+    { field_name: "citizenship", title: "Citizenship" },
+  ];
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -53,7 +72,7 @@ const Profile = ({ route, navigation }) => {
             setLoading,
             accountId
           );
-          console.log(fetchedProfile);
+          console.log("personal profile", fetchedProfile);
           setScannedProfile(fetchedProfile);
         } else {
           setScannedType("organization");
@@ -61,6 +80,7 @@ const Profile = ({ route, navigation }) => {
             setLoading,
             accountId
           );
+          console.log("organization profile", fetchedProfile);
           setScannedProfile(fetchedProfile);
         }
       } catch (error) {
@@ -82,24 +102,21 @@ const Profile = ({ route, navigation }) => {
     setLoading(true);
     try {
       if (scannedType === "personal") {
-        // Update the organization profile's synqed list
-        const updatedProfile = await synqOrganizationProfile({
+        const updatedOrgProfile = await synqOrganizationProfile({
           setLoading,
           session,
           accountId,
           userId,
         });
-        
-        Alert.alert("Success", "Successfully synced with the user.");
+        Alert.alert("Success", "Successfully synced boths users.");
       } else {
-        // Update the personal profile's synqed list
-        const updatedProfile = await synqPersonalProfile({
+        const updatedPersonProfile = await synqPersonalProfile({
           setLoading,
           session,
           accountId,
           userId,
         });
-        Alert.alert("Success", "Successfully synced with the organization.");
+        Alert.alert("Success", "Successfully synced boths users.");
       }
     } catch (error) {
       console.error("Error updating synced list:", error);
@@ -110,48 +127,123 @@ const Profile = ({ route, navigation }) => {
   };
 
   return (
-    <View className="flex-1 justify-center items-center px-4 relative space-y-4">
-      <TouchableOpacity
-        className=""
-        onPress={() => navigation.navigate("Landing")}
+    <View className="flex justify-center items-center h-full w-full">
+      <ScrollView
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+        }}
+        className="w-full p-8 mt-24 bg-synq-blue "
       >
-        <Image
-          className="h-8 w-8"
-          source={require("../assets/icons/close.png")}
-        />
-      </TouchableOpacity>
-      <Text className="text-2xl font-bold mb-4">Profile </Text>
-
-      {scannedProfile ? (
-        scannedType === "personal" ? (
-          // Render fields for personal profile
-          <View className="space-y-2">
-            <Text className="text-lg">First Name: {scannedProfile.first_name}</Text>
-            <Text className="text-lg">Last Name: {scannedProfile.last_name}</Text>
-            <Text className="text-lg">Email: {scannedProfile.email}</Text>
-          </View>
+        <View className="flex flex-row items-center mb-12">
+          <TouchableOpacity
+            className="absolute z-50"
+            onPress={() => navigation.navigate("Landing")}
+          >
+            {white_close}
+          </TouchableOpacity>
+          <Text className="text-3xl text-center text-white font-bold w-full">
+            Scanned Card
+          </Text>
+        </View>
+        {scannedProfile ? (
+          scannedType === "personal" ? (
+            // Render fields for personal profile
+            <View className="flex justify-center items-center text-center space-y-8 w-full mb-12">
+              <View className="flex flex-col justify-center items-center space-y-2">
+                <View className="w-[100px] h-[100px] bg-[#D9D9D9] rounded-full mb-4" />
+                <Text className="text-xl font-bold text-white">
+                  {scannedProfile.email}
+                </Text>
+                <Text className="text-lg text-white mb-4">Student</Text>
+              </View>
+              <View className="flex flex-col justify-center items-center w-full">
+                {personalFields.map((personalField, idx) => {
+                  return (
+                    <View className="w-full" key={idx}>
+                      {personalField.title !== "First Name" &&
+                      personalField.title !== "Last Name" ? (
+                        <View>
+                          <Text className="text-white text-base mb-2 text-bold">
+                            {personalField.title}
+                          </Text>
+                          <View className="flex align-center flex-row">
+                            {personalField.title === "Email" ? (
+                              <Text>{mail} </Text>
+                            ) : null}
+                            {personalField.title === "Number" ? (
+                              <Text>{call} </Text>
+                            ) : null}
+                            <Text className="text-white mb-2">
+                              {scannedProfile[personalField.field_name]}
+                            </Text>
+                          </View>
+                        </View>
+                      ) : null}
+                      {/* <TextInput
+                        style={{
+                          borderRadius: 10,
+                          // Apply shadow properties
+                          shadowColor: "#000",
+                          shadowOffset: { width: 0, height: 2 },
+                          shadowOpacity: 0.25,
+                          shadowRadius: 3.84,
+                          elevation: 5, // Needed for Android shadow
+                        }}
+                        className="text-white border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg mb-4"
+                        value={scannedProfile[personalField.field_name]}
+                        onChangeText={(value) =>
+                          handleChange(personalField.field_name, value)
+                        }
+                      /> */}
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          ) : (
+            // Render fields for organization profile
+            <View className="flex justify-center items-center text-center space-y-8 w-full mb-12">
+              <View className="flex flex-col justify-center items-center space-y-2">
+                <View className="w-[100px] h-[100px] bg-[#D9D9D9] rounded-full mb-4" />
+                <Text className="text-xl font-bold text-white">
+                  {scannedProfile.org_name}
+                </Text>
+                <Text className="text-lg text-white mb-4">Organization</Text>
+              </View>
+              <View className="flex flex-col justify-center items-center w-full">
+                {organizationFields.map((organizationField, idx) => {
+                  return (
+                    <View className="w-full" key={idx}>
+                      <Text className="text-white text-base mb-2">
+                        {organizationField.title}
+                      </Text>
+                      {scannedProfile[organizationField.field_name] === null ? (
+                        <Text className="text-white mb-2">Nothing listed</Text>
+                      ) : (
+                        <Text className="text-white mb-2">
+                          {"   "}
+                          {scannedProfile[organizationField.field_name]}
+                        </Text>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+          )
         ) : (
-          // Render fields for organization profile
-          <View className="space-y-2">
-            <Text className="text-lg">
-              Organization Name: {scannedProfile.organization_name}
-            </Text>
-            <Text className="text-lg">
-              Contact Person: {scannedProfile.contact_person}
-            </Text>
-            <Text className="text-lg">Email: {scannedProfile.email}</Text>
-          </View>
-        )
-      ) : (
-        <Text className="text-red-500">No profile data found</Text>
-      )}
-      <Text>id: {accountId}</Text>
-      <TouchableOpacity
-        className="shadow rounded-full bg-white p-1 w-40"
-        onPress={handleSynq}
-      >
-        <Text className="text-2xl text-center">Synq</Text>
-      </TouchableOpacity>
+          <Text className="text-red-500">No profile data found</Text>
+        )}
+        <TouchableOpacity
+          className="shadow rounded-full bg-white p-1 w-40 mb-24"
+          onPress={handleSynq}
+        >
+          <Text className="text-2xl text-center">Synq</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };

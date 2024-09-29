@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { white_edit } from "../../lib/svg";
 
 const OrganizationDisplayProfile = ({
   profile,
@@ -29,21 +30,37 @@ const OrganizationDisplayProfile = ({
         {profile ? (
           // Render fields for personal profile
           <View className="flex justify-center items-center text-center space-y-8 w-full mb-12">
-            <Text className="text-2xl text-left font-bold w-full">
+            <Text
+              className="text-3xl text-left font-bold w-full"
+              style={{ fontFamily: "IBMPlexSans-Bold" }}
+            >
               Your Card
             </Text>
             <View className="flex flex-col justify-center items-center">
               <View className="w-[100px] h-[100px] bg-[#D9D9D9] rounded-full mb-4" />
-              <Text className="text-xl font-bold">{profile.email}</Text>
-              <Text className="text-lg mb-4">Organization</Text>
+              <Text
+                className="text-xl font-bold"
+                style={{ fontFamily: "IBMPlexSans-Regular" }}
+              >
+                {profile.email}
+              </Text>
+              <Text
+                className="text-lg mb-4"
+                style={{ fontFamily: "IBMPlexSans-Regular" }}
+              >
+                Organization
+              </Text>
               <TouchableOpacity
-                className="flex-row items-center justify-center border-2 bg-synq-red border-synq-red rounded-full py-2 px-4 space-x-2"
+                className="flex-row items-center justify-center border-2 border-synq-red bg-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={() => setEditMode(true)}
               >
-                <Text className="bg-synq-red text-lg text-white font-bold">
+                <Text
+                  className="text-white text-lg font-bold"
+                  style={{ fontFamily: "IBMPlexSans-Regular" }}
+                >
                   Edit Profile
                 </Text>
-                <Image source={require("../../assets/icons/edit.png")} />
+                {white_edit}
               </TouchableOpacity>
             </View>
 
@@ -51,7 +68,10 @@ const OrganizationDisplayProfile = ({
               {organizationFields.map((organizationField, idx) => {
                 return (
                   <View className="w-full mb-4" key={idx}>
-                    <Text className="text-synq-text text-base">
+                    <Text
+                      className="text-synq-text text-base"
+                      style={{ fontFamily: "IBMPlexSans-Regular" }}
+                    >
                       {organizationField.title}
                     </Text>
                     <TextInput
@@ -64,6 +84,7 @@ const OrganizationDisplayProfile = ({
                         shadowOpacity: 0.25,
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
+                        fontFamily: "IBMPlexSans-Regular",
                       }}
                       className="text-synq-text border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
                       value={profile[organizationField.field_name]}
@@ -90,7 +111,10 @@ const OrganizationDisplayProfile = ({
                   className=""
                   source={require("../../assets/icons/logout.png")}
                 />
-                <Text className="text-synq-red text-center text-lg font-bold">
+                <Text
+                  className="text-synq-red text-center text-lg font-bold"
+                  style={{ fontFamily: "IBMPlexSans-Bold" }}
+                >
                   Log Out
                 </Text>
               </TouchableOpacity>
@@ -98,14 +122,23 @@ const OrganizationDisplayProfile = ({
           </View>
         ) : (
           <View className="space-y-4 flex-1 justify-center items-center text-center">
-            <Text className="text-2xl text-left font-bold mb-4 w-full border-2">
+            <Text
+              className="text-2xl text-left font-bold mb-4 w-full border-2"
+              style={{ fontFamily: "IBMPlexSans-Regular" }}
+            >
               Your Card
             </Text>
-            <Text className="text-red-500">No profile data found</Text>
+            <Text
+              className="text-red-500"
+              style={{ fontFamily: "IBMPlexSans-Regular" }}
+            >
+              No profile data found
+            </Text>
           </View>
         )}
       </ScrollView>
     </View>
   );
 };
+
 export default OrganizationDisplayProfile;

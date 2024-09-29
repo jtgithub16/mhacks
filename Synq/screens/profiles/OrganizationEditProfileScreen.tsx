@@ -42,18 +42,34 @@ const OrganizationEditProfile = ({
         {profile ? (
           // Render fields for personal profile
           <View className="flex justify-center items-center text-center space-y-8 w-full mb-12">
-            <Text className="text-2xl text-left font-bold w-full">
+            <Text
+              className="text-3xl text-left font-bold w-full"
+              style={{ fontFamily: "IBMPlexSans-Bold" }}
+            >
               Your Card
             </Text>
             <View className="flex flex-col justify-center items-center">
               <View className="w-[100px] h-[100px] bg-[#D9D9D9] rounded-full mb-4" />
-              <Text className="text-xl font-bold">{profile.email}</Text>
-              <Text className="text-lg mb-4">Organization</Text>
+              <Text
+                className="text-xl font-bold"
+                style={{ fontFamily: "IBMPlexSans-Regular" }}
+              >
+                {profile.email}
+              </Text>
+              <Text
+                className="text-lg mb-4"
+                style={{ fontFamily: "IBMPlexSans-Regular" }}
+              >
+                Organization
+              </Text>
               <TouchableOpacity
                 className="flex-row items-center justify-center border-2 border-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={handleClick}
               >
-                <Text className="text-synq-red text-lg font-bold">
+                <Text
+                  className="text-synq-red text-lg font-bold"
+                  style={{ fontFamily: "IBMPlexSans-Regular" }}
+                >
                   Save Profile
                 </Text>
                 <Image source={require("../../assets/icons/edit.png")} />
@@ -64,7 +80,10 @@ const OrganizationEditProfile = ({
               {organizationFields.map((organizationField, idx) => {
                 return (
                   <View className="w-full mb-4" key={idx}>
-                    <Text className="text-synq-text text-base">
+                    <Text
+                      className="text-synq-text text-base"
+                      style={{ fontFamily: "IBMPlexSans-Regular" }}
+                    >
                       {organizationField.title}
                     </Text>
                     <TextInput
@@ -77,6 +96,7 @@ const OrganizationEditProfile = ({
                         shadowOpacity: 0.25,
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
+                        fontFamily: "IBMPlexSans-Regular",
                       }}
                       className="text-synq-text border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
                       value={profile[organizationField.field_name]}
@@ -95,7 +115,10 @@ const OrganizationEditProfile = ({
                   className=""
                   source={require("../../assets/icons/logout.png")}
                 />
-                <Text className="text-synq-red text-center text-lg font-bold">
+                <Text
+                  className="text-synq-red text-center text-lg font-bold"
+                  style={{ fontFamily: "IBMPlexSans-Bold" }}
+                >
                   Log Out
                 </Text>
               </TouchableOpacity>
@@ -103,10 +126,18 @@ const OrganizationEditProfile = ({
           </View>
         ) : (
           <View className="space-y-4 flex-1 justify-center items-center text-center">
-            <Text className="text-2xl text-left font-bold mb-4 w-full border-2">
+            <Text
+              className="text-2xl text-left font-bold mb-4 w-full border-2"
+              style={{ fontFamily: "IBMPlexSans-Regular" }}
+            >
               Your Card
             </Text>
-            <Text className="text-red-500">No profile data found</Text>
+            <Text
+              className="text-red-500"
+              style={{ fontFamily: "IBMPlexSans-Regular" }}
+            >
+              No profile data found
+            </Text>
           </View>
         )}
       </ScrollView>
