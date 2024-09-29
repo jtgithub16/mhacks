@@ -127,11 +127,12 @@ export const logout = async () => {
 export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
   let profile: PersonalProfile | null = null; // Declare it here
     try {
+      console.log(id);
       setLoading(true)
 
       const { data, error, status } = await supabase
         .from('personal')
-        .select(`first_name, last_name, email`)
+        .select(`first_name, last_name, email, synqed`)
         .eq('personal_id', id)
         .single()
       
@@ -145,6 +146,7 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
+          synqed: data.synqed,
       };
         profile = personalProfile;
         console.log("personal profile when created:", personalProfile)
@@ -168,7 +170,7 @@ export const getOrganizationProfile = async (setLoading: React.Dispatch<React.Se
   
         const { data, error, status } = await supabase
           .from('organization')
-          .select(`org_name, website, email, description`)
+          .select(`org_name, website, email, description, synqed`)
           .eq('organization_id', id)
           .single()
         
@@ -182,6 +184,7 @@ export const getOrganizationProfile = async (setLoading: React.Dispatch<React.Se
             website: data.website,
             email: data.email,
             description: data.description,
+            synqed: data.synqed
         };
         }
       } catch (error) {
