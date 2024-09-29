@@ -26,7 +26,6 @@ const History = ({ navigation }) => {
   // const [profile, setProfile] = useState(null);
   const [synqedIds, setSynqedIds] = useState<string[]>([]);
   const [synqedNames, setSynqedNames] = useState<string[]>([]);
-  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -34,17 +33,12 @@ const History = ({ navigation }) => {
         data: { session },
       } = await supabase.auth.getSession();
       // setSessions(session);
-      setUserId(session?.user.id);
-      fetchProfile(session);
+      fetchProfile(session?.user.id);
     };
 
-    const fetchProfile = async (session) => {
+    const fetchProfile = async (userId) => {
       try {
-<<<<<<< Updated upstream
-        if (checkIdType(session)) {
-=======
         if (checkIdType(userId)) {
->>>>>>> Stashed changes
           setType("personal");
           const fetchedProfile = await getPersonalProfile(setLoading, userId);
           console.log(fetchedProfile);
