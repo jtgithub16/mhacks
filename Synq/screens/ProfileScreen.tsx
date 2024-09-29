@@ -40,14 +40,15 @@ const Profile = ({ navigation }) => {
     }
   };
 
-  const handlePersonalSubmit = async (email) => {
+  const handlePersonalSubmit = async () => {
     setEditMode(!editMode);
     updatePersonalProfile(setLoading, session, profile);
   };
 
-  const handleEdit = async () => {
-      setEditMode(!editMode);
-  }
+  const handleOrganizationSubmit = async () => {
+    setEditMode(!editMode);
+    updateOrganizationProfile(setLoading, session, profile);
+  };
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -99,24 +100,27 @@ const Profile = ({ navigation }) => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      {
-        type === "personal" ? (
-          <PersonalProfileScreen 
-            profile={profile} 
-            editMode={editMode} 
-            setEditMode={setEditMode}
-            handleLogOut={handleLogOut}
-            handlePersonalSubmit={handlePersonalSubmit}
-          />
-        ) : (
-          <OrganizationProfileScreen 
-            profile={profile} 
-            editMode={editMode} 
-            setEditMode={setEditMode}
-            handleLogOut={handleLogOut}
-          />
-        )
-      }
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : type === "personal" ? (
+        <PersonalProfileScreen
+          profile={profile}
+          setProfile={setProfile}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          handlePersonalSubmit={handlePersonalSubmit}
+        />
+      ) : (
+        <OrganizationProfileScreen
+          profile={profile}
+          setProfile={setProfile}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          handleOrganizationSubmit={handleOrganizationSubmit}
+        />
+      )}
     </View>
   );
 };

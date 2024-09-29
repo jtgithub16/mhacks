@@ -13,27 +13,42 @@ import {
 import OrganizationEditProfile from "./OrganizationEditProfileScreen";
 import OrganizationDisplayProfile from "./OrganizationDisplayProfileScreen";
 
-const OrganizationProfileScreen = ({profile, editMode, setEditMode, handleLogOut}) => {
-    return (
-        <View>
-            {
-                editMode ? (
-                    <OrganizationEditProfile 
-                        profile={profile}
-                        editMode = {editMode}
-                        setEditMode={setEditMode}
-                        handleLogOut={handleLogOut}
-                        // handlePersonalSubmit={handlePersonalSubmit}
-                    />
-                ) : (
-                    <OrganizationDisplayProfile
-                        profile={profile}
-                        setEditMode={setEditMode}
-                        handleLogOut={handleLogOut}
-                    />
-                )
-            }
-        </View>
-    );
-}
+const OrganizationProfileScreen = ({
+  profile,
+  setProfile,
+  editMode,
+  setEditMode,
+  handleLogOut,
+  handleOrganizationSubmit,
+}) => {
+  const organizationFields = [
+    { field_name: "org_name", title: "Organization Name" },
+    { field_name: "website", title: "Website" },
+    { field_name: "first_name", title: "First Name" },
+    { field_name: "last_name", title: "Last Name" },
+    { field_name: "number", title: "Number" },
+  ];
+
+  return (
+    <View>
+      {editMode ? (
+        <OrganizationEditProfile
+          profile={profile}
+          setProfile={setProfile}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          handleOrganizationSubmit={handleOrganizationSubmit}
+          organizationFields={organizationFields}
+        />
+      ) : (
+        <OrganizationDisplayProfile
+          profile={profile}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          organizationFields={organizationFields}
+        />
+      )}
+    </View>
+  );
+};
 export default OrganizationProfileScreen;

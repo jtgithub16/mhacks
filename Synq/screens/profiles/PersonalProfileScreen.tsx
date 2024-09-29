@@ -13,30 +13,41 @@ import {
 import PersonalDisplayProfile from "./PersonalDisplayProfileScreen";
 import PersonalEditProfile from "./PersonalEditProfileScreen";
 
-const PersonalProfileScreen = ({profile, editMode, setEditMode, handleLogOut,  handlePersonalSubmit, setEmail}) => {
-    useEffect(() => {
+const PersonalProfileScreen = ({
+  profile,
+  setProfile,
+  editMode,
+  setEditMode,
+  handleLogOut,
+  handlePersonalSubmit,
+}) => {
+  const personalFields = [
+    { field_name: "first_name", title: "First Name" },
+    { field_name: "last_name", title: "Last Name" },
+    { field_name: "number", title: "Number" },
+    { field_name: "citizenship", title: "Citizenship" },
+  ];
 
-    },[editMode]);
-    return (
-        <View className="w-full">
-            {
-                editMode ? (
-                    <PersonalEditProfile 
-                        profile={profile}
-                        editMode = {editMode}
-                        setEditMode={setEditMode}
-                        handleLogOut={handleLogOut}
-                        handlePersonalSubmit={handlePersonalSubmit}
-                    />
-                ) : (
-                    <PersonalDisplayProfile
-                        profile={profile}
-                        setEditMode={setEditMode}
-                        handleLogOut={handleLogOut}
-                    />
-                )
-            }
-        </View>
-    );
-}
+  return (
+    <View className="w-full">
+      {editMode ? (
+        <PersonalEditProfile
+          profile={profile}
+          setProfile={setProfile}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          handlePersonalSubmit={handlePersonalSubmit}
+          personalFields={personalFields}
+        />
+      ) : (
+        <PersonalDisplayProfile
+          profile={profile}
+          setEditMode={setEditMode}
+          handleLogOut={handleLogOut}
+          personalFields={personalFields}
+        />
+      )}
+    </View>
+  );
+};
 export default PersonalProfileScreen;
