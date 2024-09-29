@@ -137,7 +137,7 @@ export const getPersonalProfile = async (
 
     const { data, error, status } = await supabase
       .from("personal")
-      .select(`first_name, last_name, email, synqed`)
+      .select(`first_name, last_name, email, synqed, number, citizenship`)
       .eq("personal_id", id)
       .single();
 
@@ -151,6 +151,8 @@ export const getPersonalProfile = async (
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.email,
+        number: data.number,
+        citizenship: data.citizenship,
         synqed: data.synqed,
       };
       profile = personalProfile;
@@ -177,7 +179,9 @@ export const getOrganizationProfile = async (
 
     const { data, error, status } = await supabase
       .from("organization")
-      .select(`org_name, website, email, description, synqed`)
+      .select(
+        `org_name, website, email, description, first_name, last_name, synqed`
+      )
       .eq("organization_id", id)
       .single();
 
@@ -188,6 +192,8 @@ export const getOrganizationProfile = async (
       const organizationProfile: OrganizationProfile = {
         organization_id: id,
         org_name: data.org_name,
+        first_name: data.first_name,
+        last_name: data.last_name,
         website: data.website,
         email: data.email,
         description: data.description,

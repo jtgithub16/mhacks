@@ -24,6 +24,7 @@ const OrganizationProfileScreen = ({
   const organizationFields = [
     { field_name: "org_name", title: "Organization Name" },
     { field_name: "website", title: "Website" },
+    { field_name: "Description", title: "Description" },
     { field_name: "first_name", title: "First Name" },
     { field_name: "last_name", title: "Last Name" },
     { field_name: "number", title: "Number" },
