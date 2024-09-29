@@ -124,16 +124,15 @@ export const logout = async () => {
   }
 };
 
-export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, session:any) => {
+export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
   let profile: PersonalProfile | null = null; // Declare it here
     try {
       setLoading(true)
-      if (!session?.user) throw new Error('No user on the session!')
 
       const { data, error, status } = await supabase
         .from('personal')
         .select(`first_name, last_name, email`)
-        .eq('personal_id', session?.user.id)
+        .eq('personal_id', id)
         .single()
       
       if (error && status !== 406) {
@@ -142,7 +141,7 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
       if (data) {
         console.log("reached")
         const personalProfile: PersonalProfile = {
-          personal_id: session?.user.id,
+          personal_id: id,
           first_name: data.first_name,
           last_name: data.last_name,
           email: data.email,
@@ -162,16 +161,15 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
     return profile
 };
 
-  export const getOrganizationProfile = async (setLoading: (loading) => {}, session: Session) => {
+  export const getOrganizationProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
     let organizationProfile: OrganizationProfile | null = null; // Declare it here
       try {
         setLoading(true)
-        if (!session?.user) throw new Error('No user on the session!')
   
         const { data, error, status } = await supabase
           .from('organization')
           .select(`org_name, website, email, description`)
-          .eq('organization_id', session?.user.id)
+          .eq('organization_id', id)
           .single()
         
         if (error && status !== 406) {
@@ -179,7 +177,7 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
         }
         if (data) {
           const organizationProfile: OrganizationProfile = {
-            organization_id: session?.user.id,
+            organization_id: id,
             org_name: data.org_name,
             website: data.website,
             email: data.email,
