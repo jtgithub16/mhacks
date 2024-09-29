@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import { PersonalProfile } from "../../lib/types";
 import { personalSignUp } from "../../lib/supabase";
+import { apple, google } from "../../lib/svg";
 
 const PersonalSignup = ({ navigation }) => {
   const initialState: PersonalProfile = {
@@ -37,7 +38,7 @@ const PersonalSignup = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.pop()}>
           <Image source={require("../../assets/icons/back.png")} />
         </TouchableOpacity>
-        <Text className="text-2xl font-bold">Personal Sign Up</Text>
+        <Text className="text-2xl font-bold" style={{ fontFamily: "IBMPlexSans-Bold" }}>Personal Sign Up</Text>
         <TextInput
           style={{
             backgroundColor: "white",
@@ -48,6 +49,7 @@ const PersonalSignup = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder={"First"}
@@ -64,6 +66,7 @@ const PersonalSignup = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder={"Last"}
@@ -80,6 +83,7 @@ const PersonalSignup = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder="Email"
@@ -96,6 +100,7 @@ const PersonalSignup = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder="Password"
@@ -108,12 +113,12 @@ const PersonalSignup = ({ navigation }) => {
           title={"Sign Up"}
           onPress={handleSubmit}
         >
-          <Text className="text-white ">Sign Up</Text>
+          <Text className="text-white p-1" style={{ fontFamily: "IBMPlexSans-Bold" }}>Sign Up</Text>
         </TouchableOpacity>
-        <View className="flex flex-row items-center space-x-4">
-          <View className="flex h-px w-1/4 bg-[#424242] " />
+        <View className="flex flex-row items-center justify-between space-x-4">
+          <View className="h-px flex-1 bg-[#424242]" />
           <Text>Or continue with</Text>
-          <View className="flex h-px w-1/4   bg-[#424242] " />
+          <View className="h-px flex-1 bg-[#424242]" />
         </View>
         <View className="flex flex-row items-center justify-center space-x-8 w-full">
           <TouchableOpacity
@@ -129,7 +134,7 @@ const PersonalSignup = ({ navigation }) => {
             }}
             className="flex items-center justify-center p-2 w-5/12 border border-[#D5D8DE] rounded-md "
           >
-            <Image source={require("../../assets/icons/google.png")} />
+            {google}
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -144,7 +149,7 @@ const PersonalSignup = ({ navigation }) => {
             }}
             className="flex items-center justify-center p-2 w-5/12 border border-[#D5D8DE] rounded-md "
           >
-            <Image source={require("../../assets/icons/apple.png")} />
+            {apple}
           </TouchableOpacity>
         </View>
       </View>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Image, TouchableOpacity, Text, TextInput } from "react-native";
 import { OrganizationProfile } from "../../lib/types";
 import { organizationSignUp } from "../../lib/supabase";
+import { apple, google } from "../../lib/svg";
 
 const OrganizationSignUp = ({ navigation }) => {
   const initialState: OrganizationProfile = {
@@ -45,7 +46,7 @@ const OrganizationSignUp = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.pop()}>
           <Image source={require("../../assets/icons/back.png")} />
         </TouchableOpacity>
-        <Text className="text-2xl font-bold">Organization Sign Up</Text>
+        <Text className="text-2xl font-bold" style={{ fontFamily: "IBMPlexSans-Bold" }}>Organization Sign Up</Text>
         <TextInput
           style={{
             backgroundColor: "white",
@@ -56,6 +57,7 @@ const OrganizationSignUp = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder={"Organization Name"}
@@ -72,12 +74,13 @@ const OrganizationSignUp = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder={"Website"}
           value={formData.website}
           onChangeText={(value) => handleChange("website", value)}
-          // style={styles.input}
+        // style={styles.input}
         />
         <TextInput
           style={{
@@ -89,12 +92,13 @@ const OrganizationSignUp = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder="Email"
           value={formData.email}
           onChangeText={(value) => handleChange("email", value)}
-          // style={styles.input}
+        // style={styles.input}
         />
         <TextInput
           style={{
@@ -106,25 +110,26 @@ const OrganizationSignUp = ({ navigation }) => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5, // Needed for Android shadow
+            fontFamily: "IBMPlexSans-Regular"
           }}
           className="border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
           placeholder="Password"
           secureTextEntry
           value={password}
           onChangeText={(value) => handlePasswordChange(value)} // Capture password input
-          // style={styles.input}
+        // style={styles.input}
         />
         <TouchableOpacity
           className="bg-synq-red w-full p-2 rounded-md items-center"
           title={"Sign Up"}
           onPress={handleSubmit}
         >
-          <Text className="text-white ">Sign Up</Text>
+          <Text className="text-white p-1" style={{ fontFamily: "IBMPlexSans-Bold" }}>Sign Up</Text>
         </TouchableOpacity>
-        <View className="flex flex-row items-center space-x-4">
-          <View className="flex h-px w-1/4 bg-[#424242] " />
+        <View className="flex flex-row items-center justify-between space-x-4">
+          <View className="h-px flex-1 bg-[#424242]" />
           <Text>Or continue with</Text>
-          <View className="flex h-px w-1/4   bg-[#424242] " />
+          <View className="h-px flex-1 bg-[#424242]" />
         </View>
         <View className="flex flex-row items-center justify-center space-x-8 w-full">
           <TouchableOpacity
@@ -140,7 +145,7 @@ const OrganizationSignUp = ({ navigation }) => {
             }}
             className="flex items-center justify-center p-2 w-5/12 border border-[#D5D8DE] rounded-md "
           >
-            <Image source={require("../../assets/icons/google.png")} />
+            {google}
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -155,7 +160,7 @@ const OrganizationSignUp = ({ navigation }) => {
             }}
             className="flex items-center justify-center p-2 w-5/12 border border-[#D5D8DE] rounded-md "
           >
-            <Image source={require("../../assets/icons/apple.png")} />
+            {apple}
           </TouchableOpacity>
         </View>
       </View>
