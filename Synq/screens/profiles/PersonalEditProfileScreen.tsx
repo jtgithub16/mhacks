@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { red_edit } from "../../lib/svg";
 
 const PersonalEditProfile = ({
   profile,
@@ -55,7 +56,7 @@ const PersonalEditProfile = ({
                 <Text className="text-synq-red text-lg font-bold">
                   Save Profile
                 </Text>
-                <Image source={require("../../assets/icons/edit.png")} />
+                {red_edit}
               </TouchableOpacity>
             </View>
 

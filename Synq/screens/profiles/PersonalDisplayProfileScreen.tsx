@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import { white_edit } from "../../lib/svg";
 
 const PersonalDisplayProfile = ({
   profile,
@@ -44,7 +45,7 @@ const PersonalDisplayProfile = ({
                 <Text className="text-white text-lg font-bold">
                   Edit Profile
                 </Text>
-                <Image source={require("../../assets/icons/edit.png")} />
+                {white_edit}
               </TouchableOpacity>
             </View>
 

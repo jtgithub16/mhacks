@@ -75,10 +75,10 @@ const Login = ({ navigation }) => {
         >
           <Text className="text-white ">Login</Text>
         </TouchableOpacity>
-        <View className="flex flex-row items-center space-x-4">
-          <View className="flex h-px w-1/4 bg-[#424242] " />
+        <View className="flex flex-row items-center justify-between space-x-4">
+          <View className="h-px flex-1 bg-[#424242]" />
           <Text>Or continue with</Text>
-          <View className="flex h-px w-1/4   bg-[#424242] " />
+          <View className="h-px flex-1 bg-[#424242]" />
         </View>
         <View className="flex flex-row items-center justify-center space-x-8 w-full">
           <TouchableOpacity
