@@ -18,26 +18,25 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-export const checkSessionType = async (session: Session) => {
-  // 1: personal, 0: organization
-  if (!session?.user) throw new Error("No user on the session!");
-  try {
-    const { data, error } = await supabase
-      .from("personal")
-      .select("*")
-      .eq("personal_id", session?.user.id);
-    if (error) {
-      console.error("error checking session type", error);
-      return false;
+export const checkIdType = async (id: string) => { // 1: personal, 0: organization
+  try{
+    const {data,error} = await supabase
+      .from('personal')
+      .select('*')
+      .eq('personal_id', id)      
+    if(error){
+      console.error("error checking session type", error)
+      return false
     }
-    if (data && data.length > 0) {
-      console.log("session is personal");
-      return false;
-    } else {
-      console.log("session is organizational", session?.user.id);
-      return true;
+    if(data && data.length > 0){
+      console.log("session is personal")
+      return true
     }
-  } catch (e) {
+    else{
+      console.log("session is organizational",  id)
+      return false
+    }
+  } catch (e){
     console.error("error checking session type, personal or org", e);
   }
 };
