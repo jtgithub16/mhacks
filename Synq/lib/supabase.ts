@@ -18,16 +18,25 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 })
 
 export const personalSignUp = async (email, password, first_name, last_name) => {
+  try{
     let { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-      data: {
-        first_name: first_name,
-        last_name: last_name,
-      },
-    },
-  })
+        email: email,
+        password: password,
+        options: {
+          data: {
+            first_name: first_name,
+            last_name: last_name,
+          },
+        },
+      })
+      if(error){
+        console.error("error signing up personal fetch", error);
+      }
+  } 
+  catch(err){
+    console.error(err); 
+  }
+  
 };
 
 export const checkSessionType = async (session:Session) => { // 1: personal, 0: organization
@@ -55,27 +64,51 @@ export const checkSessionType = async (session:Session) => { // 1: personal, 0: 
 };
 
 export const organizationSignUp = async (email, passsword, org_name, website) => {
+  try{
     let { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: passsword,
-        options: {
-          data: {
-            org_name: org_name,
-            website: website
-          }
-        }
-  })
+            email: email,
+            password: passsword,
+            options: {
+              data: {
+                org_name: org_name,
+                website: website
+              }
+            }
+      })
+      if(error){
+        console.error("error signing up organization fetch", error);
+      }
+  }catch(e){
+    console.error("error signing up organization", e);
+  }
 };
 
 export const login = async (email, password) => {
+  try{
     let { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-  })
+          email: email,
+          password: password,
+      })
+    if(error){
+      console.error("error login fetch", error)
+    }
+  }catch(e){
+    console.error("error logging in", e);
+  }
+  
 }
 
 export const logout = async () => {
-  let { error } = await supabase.auth.signOut()
+  try{
+    let { error } = await supabase.auth.signOut()
+    if(error){
+      console.error("error signout fetch", error)
+    }
+  }catch(e){
+    console.error("error logging out", e);
+
+  }
+  
 }
 
 export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, session:any) => {
@@ -111,7 +144,7 @@ export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetSta
     return personalProfile
   }
 
-  export const getOrganizationProfile = async (setLoading: (loading) => {}, session: Session) => {
+  export const getOrganizationProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, session:any) => {
     let organizationProfile: OrganizationProfile | null = null; // Declare it here
       try {
         setLoading(true)
