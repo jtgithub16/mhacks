@@ -20,9 +20,9 @@ const Landing = ({ navigation }) => {
           if (route.name === "Code") {
             icon = <IonIcon name={"qr-code"} size={size} color={color} />;
           } else if (route.name === "History") {
-            icon = <IonIcon name={"time-outline"} size={size} color={color} />;
+            icon = <IonIcon name={"time"} size={size} color={color} />;
           } else if (route.name === "Profile") {
-            icon = <IonIcon name={"card-outline"} size={size} color={color} />;
+            icon = <IonIcon name={"person"} size={size} color={color} />;
           }
 
           return icon;
