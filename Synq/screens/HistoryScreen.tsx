@@ -48,7 +48,7 @@ const History = ({ navigation }) => {
           setType("organization");
           const fetchedProfile = await getOrganizationProfile(
             setLoading,
-            userId
+            userId 
           );
           console.log(fetchedProfile);
           // setProfile(fetchedProfile);

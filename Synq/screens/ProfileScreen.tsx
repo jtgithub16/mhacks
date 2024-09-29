@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Button,
-  TextInput,
-  ScrollView,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Text, View } from "react-native";
 import {
   supabase,
   getPersonalProfile,
@@ -37,6 +26,11 @@ const Profile = ({ navigation }) => {
     if (success) {
       console.log("succesfully logged out");
       navigation.navigate("Welcome");
+      const success = await logout();
+      if (success) {
+        console.log("succesfully logged out");
+        navigation.navigate("Welcome");
+      }
     }
   };
 
