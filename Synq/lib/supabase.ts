@@ -18,25 +18,25 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-export const checkIdType = async (id: string) => { // 1: personal, 0: organization
-  try{
-    const {data,error} = await supabase
-      .from('personal')
-      .select('*')
-      .eq('personal_id', id)      
-    if(error){
-      console.error("error checking session type", error)
-      return false
+export const checkIdType = async (id: string) => {
+  // 1: personal, 0: organization
+  try {
+    const { data, error } = await supabase
+      .from("personal")
+      .select("*")
+      .eq("personal_id", id);
+    if (error) {
+      console.error("error checking session type", error);
+      return false;
     }
-    if(data && data.length > 0){
-      console.log("session is personal")
-      return true
+    if (data && data.length > 0) {
+      console.log("session is personal");
+      return true;
+    } else {
+      console.log("session is organizational", id);
+      return false;
     }
-    else{
-      console.log("session is organizational",  id)
-      return false
-    }
-  } catch (e){
+  } catch (e) {
     console.error("error checking session type, personal or org", e);
   }
 };
@@ -208,7 +208,7 @@ export const getOrganizationProfile = async (
 export const updatePersonalProfile = async (
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   session: Session,
-  updatedProfile: PersonalProfile,
+  updatedProfile: PersonalProfile
 ) => {
   try {
     setLoading(true);
@@ -228,15 +228,11 @@ export const updatePersonalProfile = async (
   }
 };
 
-export const updateOrganizationProfile = async ({
-  setLoading,
-  session,
-  updatedProfile,
-}: {
-  setLoading:  React.Dispatch<React.SetStateAction<boolean>>;
-  session: Session;
-  updatedProfile: OrganizationProfile;
-}) => {
+export const updateOrganizationProfile = async (
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  session: Session,
+  updatedProfile: OrganizationProfile
+) => {
   try {
     setLoading(true);
     if (!session?.user) throw new Error("No user on the session!");
@@ -266,7 +262,7 @@ export const synqPersonalProfile = async ({
   setLoading: (loading: boolean) => void;
   session: Session;
   accountId: string; // The ID of the organization to sync with
-  userId: string;    // The ID of the user syncing
+  userId: string; // The ID of the user syncing
 }) => {
   try {
     setLoading(true);
@@ -289,7 +285,7 @@ export const synqPersonalProfile = async ({
       synqed: [...(profile.synqed || []), accountId], // Add the new organization to the synqed list
     };
 
-    console.log("about to update supabase")
+    console.log("about to update supabase");
 
     const { error } = await supabase.from("personal").upsert(updatedProfile);
 
@@ -314,15 +310,15 @@ export const synqOrganizationProfile = async ({
   setLoading: (loading: boolean) => void;
   session: Session;
   accountId: string; // The ID of the person to sync with
-  userId: string;    // The ID of the organnization syncing
+  userId: string; // The ID of the organnization syncing
 }) => {
   try {
-    console.log("BEGIN SYNQ PROCESS")
-    
+    console.log("BEGIN SYNQ PROCESS");
+
     setLoading(true);
     if (!session?.user) throw new Error("No user on the session!");
 
-    console.log("alskjdf")
+    console.log("alskjdf");
     // Fetch the current organization profile
     const { data: profile, error: fetchError } = await supabase
       .from("organization")
@@ -330,23 +326,25 @@ export const synqOrganizationProfile = async ({
       .eq("organization_id", userId)
       .single();
 
-    console.log(fetchError)
-    console.log("profile")
-    console.log(profile)
+    console.log(fetchError);
+    console.log("profile");
+    console.log(profile);
 
     if (fetchError || !profile) {
       throw new Error("Error fetching the profile.");
     }
-    console.log("LSDKJF")
+    console.log("LSDKJF");
     // Update the synqed list
     const updatedProfile = {
       ...profile,
       synqed: [...(profile.synqed || []), accountId], // Add the new person to the synqed list
     };
 
-    console.log("about to update supabase")
+    console.log("about to update supabase");
 
-    const { error } = await supabase.from("organization").upsert(updatedProfile);
+    const { error } = await supabase
+      .from("organization")
+      .upsert(updatedProfile);
 
     if (error) {
       throw error;
