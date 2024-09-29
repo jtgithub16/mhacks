@@ -88,7 +88,7 @@ const PersonalDisplayProfile = ({
               >
                 <Image
                   className=""
-                  source={require("../../assets/icons/edit.png")}
+                  source={require("../../assets/icons/logout.png")}
                 />
                 <Text className="text-synq-red text-center text-lg font-bold">
                   Log Out

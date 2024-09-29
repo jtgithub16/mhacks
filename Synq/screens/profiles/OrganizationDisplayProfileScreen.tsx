@@ -37,7 +37,7 @@ const OrganizationDisplayProfile = ({
               <Text className="text-xl font-bold">{profile.email}</Text>
               <Text className="text-lg mb-4">Organization</Text>
               <TouchableOpacity
-                className="flex-row items-center justify-center border border-synq-red rounded-full py-2 px-4 space-x-2"
+                className="flex-row items-center justify-center border-2 bg-synq-red border-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={() => setEditMode(true)}
               >
                 <Text className="bg-synq-red text-lg font-bold">
@@ -88,7 +88,7 @@ const OrganizationDisplayProfile = ({
               >
                 <Image
                   className=""
-                  source={require("../../assets/icons/edit.png")}
+                  source={require("../../assets/icons/logout.png")}
                 />
                 <Text className="text-synq-red text-center text-lg font-bold">
                   Log Out
