@@ -30,6 +30,30 @@ export const personalSignUp = async (email, password, first_name, last_name) => 
   })
 };
 
+export const checkSessionType = async (session:Session) => { // 1: personal, 0: organization
+  if (!session?.user) throw new Error('No user on the session!')
+  try{
+    const {data,error} = await supabase
+      .from('personalUsers')
+      .select('*')
+      .eq('personl_id', session?.user.id)      
+    if(error){
+      console.error("error checking session type", error)
+      return false
+    }
+    if(data && data.length > 0){
+      console.log("session is personal")
+      return true
+    }
+    else{
+      console.log("session is organization")
+      return true
+    }
+  } catch (e){
+    console.error("error checking session type, personal or org", e);
+  }
+};
+
 export const organizationSignUp = async (email, passsword, org_name, website) => {
     let { data, error } = await supabase.auth.signUp({
         email: email,
@@ -54,7 +78,7 @@ export const logout = async () => {
   let { error } = await supabase.auth.signOut()
 }
 
-export const getPersonalProfile = async (setLoading, session) => {
+export const getPersonalProfile = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, session:any) => {
   let personalProfile: PersonalProfile | null = null; // Declare it here
     try {
       setLoading(true)
