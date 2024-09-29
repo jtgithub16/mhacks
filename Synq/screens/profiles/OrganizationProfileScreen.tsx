@@ -30,7 +30,7 @@ const OrganizationProfileScreen = ({
   ];
 
   return (
-    <View>
+    <View className="w-full">
       {editMode ? (
         <OrganizationEditProfile
           profile={profile}

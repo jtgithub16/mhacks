@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Text,
-  SafeAreaView,
+  TextInput,
   TouchableOpacity,
   View,
   ScrollView,
@@ -15,15 +15,15 @@ const OrganizationDisplayProfile = ({
   organizationFields,
 }) => {
   return (
-    <SafeAreaView className="flex justify-center items-center h-full w-full">
+    <View className="flex justify-center items-center h-full w-full">
       <ScrollView
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
-          width: "100%",
           display: "flex",
           flexDirection: "column",
         }}
+        className="w-full p-8"
         // className="flex flex-col justify-center items-center h-full w-full"
       >
         {profile ? (
@@ -40,7 +40,7 @@ const OrganizationDisplayProfile = ({
                 className="flex-row items-center justify-center border border-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={() => setEditMode(true)}
               >
-                <Text className="text-synq-red text-lg font-bold">
+                <Text className="bg-synq-red text-lg font-bold">
                   Edit Profile
                 </Text>
                 <Image source={require("../../assets/icons/edit.png")} />
@@ -50,11 +50,11 @@ const OrganizationDisplayProfile = ({
             <View className="flex flex-col justify-center items-center w-full">
               {organizationFields.map((organizationField, idx) => {
                 return (
-                  <View className="w-full" key={idx}>
-                    <Text className="text-[#424242] text-base">
+                  <View className="w-full mb-4" key={idx}>
+                    <Text className="text-synq-text text-base">
                       {organizationField.title}
                     </Text>
-                    <Text
+                    <TextInput
                       style={{
                         backgroundColor: "white",
                         borderRadius: 10,
@@ -65,15 +65,25 @@ const OrganizationDisplayProfile = ({
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
                       }}
-                      className="border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
-                    >
-                      {profile[organizationField.field_name]}
-                    </Text>
+                      className="text-synq-text border text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
+                      value={profile[organizationField.field_name]}
+                      editable={false}
+                    />
                   </View>
                 );
               })}
               <TouchableOpacity
-                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2"
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  // Apply shadow properties
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5, // Needed for Android shadow
+                }}
+                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2 mt-8"
                 onPress={handleLogOut}
               >
                 <Image
@@ -95,7 +105,7 @@ const OrganizationDisplayProfile = ({
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 export default OrganizationDisplayProfile;

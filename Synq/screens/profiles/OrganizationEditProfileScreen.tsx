@@ -27,7 +27,7 @@ const OrganizationEditProfile = ({
   };
 
   return (
-    <SafeAreaView className="flex justify-center items-center h-full w-full">
+    <View className="flex justify-center items-center h-full w-full">
       <ScrollView
         contentContainerStyle={{
           justifyContent: "center",
@@ -36,6 +36,7 @@ const OrganizationEditProfile = ({
           display: "flex",
           flexDirection: "column",
         }}
+        className="w-full p-8"
         // className="flex flex-col justify-center items-center h-full w-full"
       >
         {profile ? (
@@ -62,8 +63,8 @@ const OrganizationEditProfile = ({
             <View className="flex flex-col justify-center items-center w-full">
               {organizationFields.map((organizationField, idx) => {
                 return (
-                  <View className="w-full" key={idx}>
-                    <Text className="text-[#424242] text-base">
+                  <View className="w-full mb-4" key={idx}>
+                    <Text className="text-synq-text text-base">
                       {organizationField.title}
                     </Text>
                     <TextInput
@@ -77,7 +78,7 @@ const OrganizationEditProfile = ({
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
                       }}
-                      className="border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
+                      className="text-synq-text border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg"
                       value={profile[organizationField.field_name]}
                       onChangeText={(value) =>
                         handleChange(organizationField.field_name, value)
@@ -87,7 +88,7 @@ const OrganizationEditProfile = ({
                 );
               })}
               <TouchableOpacity
-                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2"
+                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2 mt-8"
                 onPress={handleLogOut}
               >
                 <Image
@@ -109,7 +110,7 @@ const OrganizationEditProfile = ({
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

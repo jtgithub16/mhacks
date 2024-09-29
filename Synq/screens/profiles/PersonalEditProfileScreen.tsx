@@ -27,15 +27,15 @@ const PersonalEditProfile = ({
   };
 
   return (
-    <SafeAreaView className="flex justify-center items-center h-full w-full">
+    <View className="flex justify-center items-center h-full w-full">
       <ScrollView
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
-          width: "100%",
           display: "flex",
           flexDirection: "column",
         }}
+        className="w-full p-8"
         // className="flex flex-col justify-center items-center h-full w-full"
       >
         {profile ? (
@@ -49,7 +49,7 @@ const PersonalEditProfile = ({
               <Text className="text-xl font-bold">{profile.email}</Text>
               <Text className="text-lg mb-4">Student</Text>
               <TouchableOpacity
-                className="flex-row items-center justify-center border border-synq-red rounded-full py-2 px-4 space-x-2"
+                className="flex-row items-center justify-center border-2 border-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={handleClick}
               >
                 <Text className="text-synq-red text-lg font-bold">
@@ -63,7 +63,7 @@ const PersonalEditProfile = ({
               {personalFields.map((personalField, idx) => {
                 return (
                   <View className="w-full" key={idx}>
-                    <Text className="text-[#424242] text-base">
+                    <Text className="text-synq-text text-base">
                       {personalField.title}
                     </Text>
                     <TextInput
@@ -77,7 +77,7 @@ const PersonalEditProfile = ({
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
                       }}
-                      className="border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
+                      className="text-synq-text border border-[#D5D8DE] w-full p-4 rounded-md drop-shadow-lg mb-4"
                       value={profile[personalField.field_name]}
                       onChangeText={(value) =>
                         handleChange(personalField.field_name, value)
@@ -92,7 +92,7 @@ const PersonalEditProfile = ({
               >
                 <Image
                   className=""
-                  source={require("../../assets/icons/edit.png")}
+                  source={require("../../assets/icons/logout.png")}
                 />
                 <Text className="text-synq-red text-center text-lg font-bold">
                   Log Out
@@ -109,7 +109,7 @@ const PersonalEditProfile = ({
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

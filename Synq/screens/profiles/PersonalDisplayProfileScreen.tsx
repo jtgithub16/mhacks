@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
 const PersonalDisplayProfile = ({
   profile,
@@ -15,15 +16,15 @@ const PersonalDisplayProfile = ({
   personalFields,
 }) => {
   return (
-    <SafeAreaView className="flex justify-center items-center h-full w-full">
+    <View className="flex justify-center items-center h-full w-full">
       <ScrollView
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
-          width: "100%",
           display: "flex",
           flexDirection: "column",
         }}
+        className="w-full p-8"
         // className="flex flex-col justify-center items-center h-full w-full"
       >
         {profile ? (
@@ -37,10 +38,10 @@ const PersonalDisplayProfile = ({
               <Text className="text-xl font-bold">{profile.email}</Text>
               <Text className="text-lg mb-4">Student</Text>
               <TouchableOpacity
-                className="flex-row items-center justify-center border border-synq-red rounded-full py-2 px-4 space-x-2"
+                className="flex-row items-center justify-center border-2 border-synq-red bg-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={() => setEditMode(true)}
               >
-                <Text className="text-synq-red text-lg font-bold">
+                <Text className="text-white text-lg font-bold">
                   Edit Profile
                 </Text>
                 <Image source={require("../../assets/icons/edit.png")} />
@@ -50,11 +51,11 @@ const PersonalDisplayProfile = ({
             <View className="flex flex-col justify-center items-center w-full">
               {personalFields.map((personalField, idx) => {
                 return (
-                  <View className="w-full" key={idx}>
-                    <Text className="text-[#424242] text-base">
+                  <View className="w-full mb-4" key={idx}>
+                    <Text className="text-synq-text text-base w-full text-left">
                       {personalField.title}
                     </Text>
-                    <Text
+                    <TextInput
                       style={{
                         backgroundColor: "white",
                         borderRadius: 10,
@@ -65,15 +66,24 @@ const PersonalDisplayProfile = ({
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
                       }}
-                      className="border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
-                    >
-                      {profile[personalField.field_name]}
-                    </Text>
+                      className="text-synq-text border border-[#D5D8DE] rounded-md w-full p-4 drop-shadow-lg"
+                      value={profile[personalField.field_name]}
+                      editable={false}
+                    />
                   </View>
                 );
               })}
               <TouchableOpacity
-                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2"
+                style={{
+                  borderRadius: 10,
+                  // Apply shadow properties
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5, // Needed for Android shadow
+                }}
+                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2 mt-8"
                 onPress={handleLogOut}
               >
                 <Image
@@ -95,7 +105,7 @@ const PersonalDisplayProfile = ({
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 export default PersonalDisplayProfile;

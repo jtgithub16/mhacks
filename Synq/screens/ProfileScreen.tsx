@@ -99,7 +99,7 @@ const Profile = ({ navigation }) => {
   }, []);
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex justify-center items-center w-full ">
       {loading ? (
         <Text>Loading...</Text>
       ) : type === "personal" ? (
