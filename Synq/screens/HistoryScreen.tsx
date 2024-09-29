@@ -26,8 +26,7 @@ const History = ({ navigation }) => {
   // const [profile, setProfile] = useState(null);
   const [synqedIds, setSynqedIds] = useState<string[]>([]);
   const [synqedNames, setSynqedNames] = useState<string[]>([]);
-
-  let userId = "";
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -35,15 +34,20 @@ const History = ({ navigation }) => {
         data: { session },
       } = await supabase.auth.getSession();
       // setSessions(session);
-      userId = session?.user.id;
+      setUserId(session?.user.id);
       fetchProfile(session);
     };
 
     const fetchProfile = async (session) => {
       try {
+<<<<<<< Updated upstream
         if (checkIdType(session)) {
+=======
+        if (checkIdType(userId)) {
+>>>>>>> Stashed changes
           setType("personal");
           const fetchedProfile = await getPersonalProfile(setLoading, userId);
+          console.log(fetchedProfile);
           // setProfile(fetchedProfile);
           setSynqedIds(fetchedProfile.synqed); // choose first 10?
         } else {
@@ -52,6 +56,7 @@ const History = ({ navigation }) => {
             setLoading,
             userId
           );
+          console.log(fetchedProfile);
           // setProfile(fetchedProfile);
           setSynqedIds(fetchedProfile.synqed);
         }
@@ -71,14 +76,16 @@ const History = ({ navigation }) => {
 
       for (const id of synqedIds) {
         if (type === "personal") {
-          const userDetails = await getPersonalProfile(setLoading, userId);
-          if (userDetails) {
-            names.push("${userDetails.first_name} ${userDetails.last_name");
-          }
-        } else {
-          const orgDetails = await getOrganizationProfile(setLoading, userId);
+          // get names of orgs personal synqed with
+          const orgDetails = await getOrganizationProfile(setLoading, id);
           if (orgDetails) {
             names.push(orgDetails.org_name);
+          }
+          // get names of people org synqed with
+        } else {
+          const userDetails = await getPersonalProfile(setLoading, id);
+          if (userDetails) {
+            names.push("${userDetails.first_name} ${userDetails.last_name");
           }
         }
       }
@@ -86,10 +93,10 @@ const History = ({ navigation }) => {
       setSynqedNames(names);
     };
 
-    if (synqedIds.length > 0) {
+    if (synqedIds && synqedIds.length > 0) {
       fetchSynqedNames();
     }
-  });
+  }, [synqedIds]);
 
   return (
     <View>

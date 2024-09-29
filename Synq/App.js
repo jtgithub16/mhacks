@@ -6,21 +6,23 @@ import { StyleSheet } from "react-native";
 
 import WelcomeScreen from "./screens/WelcomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import ScannedProfile from "./screens/ScannedProfileScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LandingScreen from "./screens/LandingScreen";
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
-const prefix = Linking.createURL('/');
+const prefix = Linking.createURL("/");
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const linking = {
-    prefixes: [prefix, 'exp://35.3.202.123:8081'],
+    prefixes: [prefix, "exp://35.3.202.123:8081"],
     config: {
       screens: {
-        Welcome: 'welcome', // Path for Home Screen
-        SignUp: 'signup',
+        Welcome: "welcome", // Path for Home Screen
+        SignUp: "signup",
+        ScannedProfile: "scanned/:accountId",
       },
     },
   };
@@ -48,22 +50,15 @@ export default function App() {
           component={LandingScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="ScannedProfile"
+          component={ScannedProfile}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const linking = {
-  prefixes: ["exp://35.3.242.196:8081"],
-  config: {
-    screens: {
-      Welcome: "welcome",
-      SignUp: "signup",
-      Login: "login",
-      Landing: "landing",
-    },
-  },
-};
 
 const styles = StyleSheet.create({
   container: {
