@@ -40,7 +40,7 @@ const OrganizationDisplayProfile = ({
                 className="flex-row items-center justify-center border-2 bg-synq-red border-synq-red rounded-full py-2 px-4 space-x-2"
                 onPress={() => setEditMode(true)}
               >
-                <Text className="bg-synq-red text-lg font-bold">
+                <Text className="bg-synq-red text-lg text-white font-bold">
                   Edit Profile
                 </Text>
                 <Image source={require("../../assets/icons/edit.png")} />
@@ -65,7 +65,7 @@ const OrganizationDisplayProfile = ({
                         shadowRadius: 3.84,
                         elevation: 5, // Needed for Android shadow
                       }}
-                      className="text-synq-text border text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
+                      className="text-synq-text border border-[#D5D8DE] text-[#424242] w-full p-4 rounded-md drop-shadow-lg"
                       value={profile[organizationField.field_name]}
                       editable={false}
                     />
@@ -83,7 +83,7 @@ const OrganizationDisplayProfile = ({
                   shadowRadius: 3.84,
                   elevation: 5, // Needed for Android shadow
                 }}
-                className="flex flex-row items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2 mt-8"
+                className="flex flex-row border-[#D5D8DE]  items-center justify-center w-full bg-white rounded-lg shadow-lg px-4 py-2 space-x-2 mt-8"
                 onPress={handleLogOut}
               >
                 <Image
